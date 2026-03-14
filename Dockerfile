@@ -30,6 +30,8 @@ RUN ./Docker/scripts/generate_database.sh
 
 RUN npm run build
 
+RUN npm install
+
 FROM node:24-alpine AS final
 
 RUN apk update && \
@@ -52,6 +54,9 @@ COPY --from=builder /evolution/.env ./.env
 COPY --from=builder /evolution/Docker ./Docker
 COPY --from=builder /evolution/runWithProvider.js ./runWithProvider.js
 COPY --from=builder /evolution/tsup.config.ts ./tsup.config.ts
+
+COPY . .
+CMD ["npm","run","start"]
 
 ENV DOCKER_ENV=true
 

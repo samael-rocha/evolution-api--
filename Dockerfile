@@ -1,4 +1,4 @@
-FROM node:24-alpine AS builder
+FROM node:20-alpine AS builder
 
 RUN apk update && \
     apk add --no-cache git ffmpeg wget curl bash openssl

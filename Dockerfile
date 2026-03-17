@@ -22,6 +22,11 @@ COPY Docker ./Docker
 
 RUN chmod +x ./Docker/scripts/* && dos2unix ./Docker/scripts/*
 
+RUN echo "DATABASE_PROVIDER=postgres" > .env && \
+    echo "DATABASE_URL=postgresql://user:pass@localhost:5432/db" >> .env && \
+    npx prisma generate && \
+    rm -f .env
+
 RUN npm run build
 RUN npm install
 

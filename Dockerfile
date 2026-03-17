@@ -26,7 +26,10 @@ COPY ./Docker ./Docker
 
 RUN chmod +x ./Docker/scripts/* && dos2unix ./Docker/scripts/*
 
-RUN ./Docker/scripts/generate_database.sh
+RUN echo "DATABASE_PROVIDER=sqlite" > .env && \
+    echo "DATABASE_URL=file:./dev.db" >> .env && \
+    ./Docker/scripts/generate_database.sh && \
+    rm -f .env
 
 RUN npm run build
 
